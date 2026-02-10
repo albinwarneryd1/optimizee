@@ -1,4 +1,4 @@
-from opimizee.app.main import main
+from opimizee.cli import main
 
 if __name__ == "__main__":
     main()
