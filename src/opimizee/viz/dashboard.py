@@ -29,6 +29,8 @@ def run_dashboard() -> None:
 
     app = Dash(__name__)
 
+    slider_id = "rows_slider"
+
     app.layout = html.Div(
         style={"maxWidth": "1100px", "margin": "30px auto", "fontFamily": "system-ui"},
         children=[
@@ -39,8 +41,15 @@ def run_dashboard() -> None:
                 style={"display": "flex", "gap": "16px", "alignItems": "center"},
                 children=[
                     html.Div("Show last N rows:"),
-                    dcc.Slider(200, min(2000, len(df)), step=100, value=min(800, len(df)),
-                               marks=None, tooltip={"placement": "bottom", "always_visible": False}),
+                    dcc.Slider(
+                        200,
+                        min(2000, len(df)),
+                        step=100,
+                        value=min(800, len(df)),
+                        marks=None,
+                        tooltip={"placement": "bottom", "always_visible": False},
+                        id=slider_id,
+                    ),
                     html.Div(id="kpi", style={"marginLeft": "auto", "fontWeight": 600}),
                 ],
             ),
@@ -58,23 +67,20 @@ def run_dashboard() -> None:
         Output("pred", "figure"),
         Output("kpi", "children"),
         Output("insights", "children"),
-        Input(app.layout.children[2].children[1], "value"),
+        Input(slider_id, "value"),
     )
     def update(n: int):
         view = df.tail(int(n)).copy()
 
         fig_trend = px.line(view, x=schema.datetime_col, y=schema.target_col, title="Consumption trend")
 
-        # predict on same window (baseline “nowcasting”)
         preds = model.predict(view)
         pred_df = view[[schema.datetime_col]].copy()
         pred_df["prediction"] = preds
-
         fig_pred = px.line(pred_df, x=schema.datetime_col, y="prediction", title="Model prediction (baseline)")
 
         kpi = f"Rows: {len(view)} | Avg: {view[schema.target_col].mean():.2f} | Max: {view[schema.target_col].max():.2f}"
 
-        # simple insights
         hour_avg = view.groupby("hour")[schema.target_col].mean().sort_values(ascending=False)
         peak_hour = int(hour_avg.index[0])
 
@@ -84,7 +90,7 @@ def run_dashboard() -> None:
         insights = [
             html.Li(f"Peak hour (avg consumption): {peak_hour}:00"),
             html.Li(f"Highest day-of-week (0=Mon): {peak_dow}"),
-            html.Li("Model is a baseline RandomForest; improve by adding weather/price/household signals."),
+            html.Li("Baseline model (RandomForest). Improve with weather, spot price, and appliance-level signals."),
         ]
 
         return fig_trend, fig_pred, kpi, insights
