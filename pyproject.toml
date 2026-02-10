@@ -3,7 +3,7 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "opimizee"
+name = "optimizee"
 version = "0.1.0"
 description = "Optimizee: electricity insights and ML forecasting dashboard"
 readme = "README.md"
@@ -25,4 +25,4 @@ package-dir = {"" = "src"}
 where = ["src"]
 
 [project.scripts]
-opimizee = "opimizee.cli:main"
+optimizee = "optimizee.cli:main"

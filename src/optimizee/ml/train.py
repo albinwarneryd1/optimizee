@@ -5,8 +5,8 @@ import joblib
 import pandas as pd
 from sklearn.metrics import mean_absolute_error, mean_squared_error
 
-from opimizee.ml.model import EnergyModel
-from opimizee.utils.config import MODELS_DIR, DataSchema
+from optimizee.ml.model import EnergyModel
+from optimizee.utils.config import MODELS_DIR, DataSchema
 
 
 @dataclass(frozen=True)

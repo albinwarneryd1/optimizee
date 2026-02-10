@@ -1,6 +1,7 @@
 README.md
 pyproject.toml
 src/opimizee/__main__.py
+src/opimizee/cli.py
 src/opimizee.egg-info/PKG-INFO
 src/opimizee.egg-info/SOURCES.txt
 src/opimizee.egg-info/dependency_links.txt

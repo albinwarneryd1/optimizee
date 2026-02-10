@@ -5,20 +5,20 @@ import joblib
 from dash import Dash, dcc, html, Input, Output
 import plotly.express as px
 
-from opimizee.utils.config import DATA_PROCESSED, MODELS_DIR, DataSchema
+from optimizee.utils.config import DATA_PROCESSED, MODELS_DIR, DataSchema
 
 
 def _load_data() -> pd.DataFrame:
     p = DATA_PROCESSED / "processed.parquet"
     if not p.exists():
-        raise FileNotFoundError("processed.parquet not found. Run: opimizee preprocess")
+        raise FileNotFoundError("processed.parquet not found. Run: optimizee preprocess")
     return pd.read_parquet(p).sort_values(DataSchema().datetime_col)
 
 
 def _load_model():
     m = MODELS_DIR / "model.joblib"
     if not m.exists():
-        raise FileNotFoundError("model.joblib not found. Run: opimizee train")
+        raise FileNotFoundError("model.joblib not found. Run: optimizee train")
     payload = joblib.load(m)
     return payload["model"], payload["schema"]
 

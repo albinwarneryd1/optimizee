@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from opimizee.utils.config import DataSchema
+from optimizee.utils.config import DataSchema
 
 
 def add_time_features(df: pd.DataFrame, schema: DataSchema = DataSchema()) -> pd.DataFrame:

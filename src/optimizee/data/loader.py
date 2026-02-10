@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 import pandas as pd
 
-from opimizee.utils.config import DATA_RAW, DataSchema
+from optimizee.utils.config import DATA_RAW, DataSchema
 
 
 @dataclass(frozen=True)

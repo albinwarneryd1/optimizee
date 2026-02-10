@@ -3,10 +3,10 @@ from __future__ import annotations
 import argparse
 import pandas as pd
 
-from opimizee.data.loader import load_raw_data
-from opimizee.data.preprocess import preprocess_data
-from opimizee.ml.train import train_model
-from opimizee.utils.config import DATA_PROCESSED, MODELS_DIR, DataSchema
+from optimizee.data.loader import load_raw_data
+from optimizee.data.preprocess import preprocess_data
+from optimizee.ml.train import train_model
+from optimizee.utils.config import DATA_PROCESSED, MODELS_DIR, DataSchema
 
 
 def cmd_preprocess() -> None:
@@ -22,7 +22,7 @@ def cmd_preprocess() -> None:
 def cmd_train() -> None:
     in_path = DATA_PROCESSED / "processed.parquet"
     if not in_path.exists():
-        raise FileNotFoundError("processed.parquet not found. Run: opimizee preprocess")
+        raise FileNotFoundError("processed.parquet not found. Run: optimizee preprocess")
 
     df = pd.read_parquet(in_path)
     result = train_model(df, schema=DataSchema())
@@ -38,7 +38,7 @@ def cmd_status() -> None:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(prog="opimizee")
+    parser = argparse.ArgumentParser(prog="optimizee")
     sub = parser.add_subparsers(dest="cmd", required=True)
 
     sub.add_parser("preprocess")
@@ -55,7 +55,7 @@ def main() -> None:
     elif args.cmd == "status":
         cmd_status()
     elif args.cmd == "dash":
-        from opimizee.viz.dashboard import run_dashboard
+        from optimizee.viz.dashboard import run_dashboard
         run_dashboard()
 
 
