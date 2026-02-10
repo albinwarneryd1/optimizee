@@ -1,2 +1,0 @@
-[console_scripts]
-opimizee = opimizee.cli:main
