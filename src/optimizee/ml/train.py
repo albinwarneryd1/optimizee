@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 import joblib
 import pandas as pd
 from sklearn.metrics import mean_absolute_error, mean_squared_error
@@ -32,7 +33,7 @@ def train_model(df: pd.DataFrame, schema: DataSchema = DataSchema()) -> TrainRes
     y_true = test_df[schema.target_col].tolist()
 
     mae = float(mean_absolute_error(y_true, preds))
-    rmse = float(mean_squared_error(y_true, preds, squared=False))
+    rmse = float(math.sqrt(mean_squared_error(y_true, preds)))
 
     MODELS_DIR.mkdir(parents=True, exist_ok=True)
     model_path = MODELS_DIR / "model.joblib"
