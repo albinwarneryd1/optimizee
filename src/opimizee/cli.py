@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import pandas as pd
-import joblib
 
 from opimizee.data.loader import load_raw_data
 from opimizee.data.preprocess import preprocess_data
