@@ -95,4 +95,4 @@ def run_dashboard() -> None:
 
         return fig_trend, fig_pred, kpi, insights
 
-    app.run_server(debug=True)
+    app.run(debug=True)
